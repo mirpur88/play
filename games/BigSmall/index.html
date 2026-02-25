@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BigSmall - High Stakes Dice</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Outfit:wght@700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="logo">
+                <div class="home-btn" onclick="GameBridge.goHome()">
+                    <i class="fas fa-home"></i> <span>HOME</span>
+                </div>
+                <span class="logo-text">BIG<span class="accent">SMALL</span></span>
+            </div>
+            <div class="balance-container">
+                <span class="balance-label">BALANCE</span>
+                <span class="balance-value" id="balance-amount">$0.00</span>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <!-- Dice Zone -->
+            <div class="dice-zone">
+                <div class="dice-cup" id="dice-cup">
+                    <div class="dice-container" id="dice-container">
+                        <!-- Dice 1 -->
+                        <div class="dice" id="dice-1">
+                            <div class="face front"></div>
+                            <div class="face back"></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                            <div class="face right"></div>
+                            <div class="face left"></div>
+                        </div>
+                        <!-- Dice 2 -->
+                        <div class="dice" id="dice-2">
+                            <div class="face front"></div>
+                            <div class="face back"></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                            <div class="face right"></div>
+                            <div class="face left"></div>
+                        </div>
+                        <!-- Dice 3 -->
+                        <div class="dice" id="dice-3">
+                            <div class="face front"></div>
+                            <div class="face back"></div>
+                            <div class="face top"></div>
+                            <div class="face bottom"></div>
+                            <div class="face right"></div>
+                            <div class="face left"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-display" id="result-display">READY TO PLAY</div>
+                <div class="total-display" id="total-display"></div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-container">
+                <div class="selection-panel">
+                    <button class="choice-btn small" data-choice="small">
+                        <span class="choice-label">SMALL</span>
+                        <span class="choice-odds">1:2</span>
+                        <span class="choice-range">4-10</span>
+                    </button>
+                    <button class="choice-btn big" data-choice="big">
+                        <span class="choice-label">BIG</span>
+                        <span class="choice-odds">1:2</span>
+                        <span class="choice-range">11-17</span>
+                    </button>
+                </div>
+
+                <div class="bet-panel">
+                    <div class="bet-input-group">
+                        <label class="config-label">BET AMOUNT</label>
+                        <div class="input-wrapper">
+                            <button class="adjust-btn" id="minus-bet">-</button>
+                            <input type="number" id="bet-amount" value="10.00" step="1" min="1">
+                            <button class="adjust-btn" id="plus-bet">+</button>
+                        </div>
+                        <div class="quick-bets">
+                            <button class="quick-btn" data-val="10">10</button>
+                            <button class="quick-btn" data-val="50">50</button>
+                            <button class="quick-btn" data-val="100">100</button>
+                            <button class="quick-btn" data-val="500">500</button>
+                        </div>
+                    </div>
+
+                    <button class="roll-btn" id="roll-btn">
+                        <span class="btn-primary-text">ROLL DICE</span>
+                        <span class="btn-secondary-text" id="btn-bet-info">10.00 ৳</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <div id="notification-area"></div>
+    </div>
+
+    <script src="../balancer.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

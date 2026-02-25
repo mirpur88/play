@@ -1,0 +1,530 @@
+:root {
+    --bg-dark: #0a0b10;
+    --card-bg: #141621;
+    --accent-gold: #ffcc00;
+    --accent-blue: #00d2ff;
+    --accent-red: #ff2d55;
+    --accent-green: #2ecc71;
+    --text-main: #ffffff;
+    --text-muted: #8a8e9e;
+    --font-primary: 'Inter', sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-primary);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 900px;
+    height: 85vh;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-image:
+        radial-gradient(circle at 50% -20%, rgba(255, 204, 0, 0.1), transparent 50%),
+        radial-gradient(circle at center, rgba(0, 210, 255, 0.05), transparent 80%);
+}
+
+/* Header */
+.game-header {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.logo-text .accent {
+    color: var(--accent-gold);
+}
+
+.balance-container {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 25px;
+    border-radius: 50px;
+    text-align: center;
+    border: 1px solid rgba(255, 204, 0, 0.2);
+}
+
+.balance-label {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    font-weight: 800;
+    margin-bottom: 2px;
+}
+
+.balance-value {
+    color: var(--accent-gold);
+    font-weight: 900;
+    font-size: 1.2rem;
+    font-family: var(--font-display);
+}
+
+.home-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    margin-right: 15px;
+}
+
+.home-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Game Main */
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 40px;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Dice Zone */
+.dice-zone {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.dice-container {
+    display: flex;
+    gap: 30px;
+    padding: 40px;
+    transform-style: preserve-3d;
+}
+
+.dice {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1.5s cubic-bezier(0.15, 0, 0.15, 1);
+}
+
+.face {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: white;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: #333;
+    backface-visibility: hidden;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Dots Styling */
+.face::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #333;
+}
+
+/* We'll handle dot positions in JS or simplified CSS */
+.dice .front {
+    transform: rotateY(0deg) translateZ(30px);
+    background: #eee;
+}
+
+.dice .back {
+    transform: rotateY(180deg) translateZ(30px);
+    background: #eee;
+}
+
+.dice .right {
+    transform: rotateY(90deg) translateZ(30px);
+    background: #eee;
+}
+
+.dice .left {
+    transform: rotateY(-90deg) translateZ(30px);
+    background: #eee;
+}
+
+.dice .top {
+    transform: rotateX(90deg) translateZ(30px);
+    background: #eee;
+}
+
+.dice .bottom {
+    transform: rotateX(-90deg) translateZ(30px);
+    background: #eee;
+}
+
+/* Result Display */
+.result-display {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.total-display {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    margin-top: 5px;
+}
+
+/* Controls */
+.controls-container {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.selection-panel {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.choice-btn {
+    flex: 1;
+    padding: 20px;
+    border-radius: 16px;
+    border: 2px solid #2a2e3e;
+    background: #1c1f2d;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.choice-btn.active {
+    border-color: var(--accent-gold);
+    background: rgba(255, 204, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 204, 0, 0.1);
+}
+
+.choice-label {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: white;
+}
+
+.choice-odds {
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+.choice-range {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.bet-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 30px;
+}
+
+.bet-input-group {
+    flex: 1;
+}
+
+.config-label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #1c1f2d;
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 12px;
+}
+
+.adjust-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #2a2e3e;
+    background: transparent;
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.adjust-btn:hover {
+    background: #2a2e3e;
+}
+
+#bet-amount {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.3rem;
+    outline: none;
+}
+
+.quick-bets {
+    display: flex;
+    gap: 8px;
+}
+
+.quick-btn {
+    flex: 1;
+    background: #2a2e3e;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.quick-btn:hover {
+    background: #363b4e;
+    color: white;
+}
+
+.roll-btn {
+    width: 200px;
+    height: 80px;
+    border-radius: 16px;
+    border: none;
+    background: var(--accent-gold);
+    color: black;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+    box-shadow: 0 10px 30px rgba(255, 204, 0, 0.3);
+}
+
+.roll-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: #ffdb4d;
+}
+
+.roll-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary-text {
+    font-family: var(--font-display);
+    font-weight: 1000;
+    font-size: 1.4rem;
+}
+
+.btn-secondary-text {
+    font-weight: 700;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Dash Styling on Dice Faces */
+.face.f1::before {
+    box-shadow: 0 0 0 #333;
+}
+
+.face.f2::before {
+    box-shadow: -15px -15px 0 #333, 15px 15px 0 #333;
+    background: transparent;
+}
+
+.face.f3::before {
+    box-shadow: -15px -15px 0 #333, 15px 15px 0 #333;
+}
+
+.face.f4::before {
+    box-shadow: -15px -15px 0 #333, 15px -15px 0 #333, -15px 15px 0 #333, 15px 15px 0 #333;
+    background: transparent;
+}
+
+.face.f5::before {
+    box-shadow: -15px -15px 0 #333, 15px -15px 0 #333, -15px 15px 0 #333, 15px 15px 0 #333;
+}
+
+.face.f6::before {
+    box-shadow: -15px -15px 0 #333, 15px -15px 0 #333, -15px 15px 0 #333, 15px 15px 0 #333, -15px 0 0 #333, 15px 0 0 #333;
+    background: transparent;
+}
+
+/* Notification */
+#notification-area {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Animations */
+@keyframes shakeCup {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(-10px, 10px) rotate(-5deg);
+    }
+
+    50% {
+        transform: translate(10px, -10px) rotate(5deg);
+    }
+
+    75% {
+        transform: translate(-10px, -10px) rotate(-5deg);
+    }
+
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+.shaking {
+    animation: shakeCup 0.4s infinite;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 600px) {
+    .app-container {
+        height: 100dvh;
+        border-radius: 0;
+    }
+
+    .game-main {
+        padding: 15px;
+    }
+
+    .dice-container {
+        gap: 10px;
+        padding: 20px;
+    }
+
+    .dice {
+        width: 45px;
+        height: 45px;
+    }
+
+    .face {
+        width: 45px;
+        height: 45px;
+        font-size: 1.2rem;
+    }
+
+    .face::before {
+        width: 6px;
+        height: 6px;
+    }
+
+    /* Adjust dash positions for smaller dice */
+    .face.f2::before {
+        box-shadow: -10px -10px 0 #333, 10px 10px 0 #333;
+    }
+
+    .face.f3::before {
+        box-shadow: -10px -10px 0 #333, 10px 10px 0 #333;
+    }
+
+    .face.f4::before {
+        box-shadow: -10px -10px 0 #333, 10px -10px 0 #333, -10px 10px 0 #333, 10px 10px 0 #333;
+    }
+
+    .face.f5::before {
+        box-shadow: -10px -10px 0 #333, 10px -10px 0 #333, -10px 10px 0 #333, 10px 10px 0 #333;
+    }
+
+    .face.f6::before {
+        box-shadow: -10px -10px 0 #333, 10px -10px 0 #333, -10px 10px 0 #333, 10px 10px 0 #333, -10px 0 0 #333, 10px 0 0 #333;
+    }
+
+    .choice-label {
+        font-size: 1.1rem;
+    }
+
+    .bet-panel {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .roll-btn {
+        width: 100%;
+        height: 65px;
+    }
+}

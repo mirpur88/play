@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minebd - Premium Mine Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Outfit:wght@700;900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="logo">
+                <div class="home-btn" onclick="GameBridge.goHome()"
+                    style="cursor: pointer; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 8px; margin-right: 15px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; vertical-align: middle;">
+                    <i class="fas fa-home"></i> <span>HOME</span>
+                </div>
+                <span class="logo-text">MINE<span class="accent">BD</span></span>
+            </div>
+            <div class="balance-container">
+                <span class="balance-label">YOUR BALANCE</span>
+                <span class="balance-value" id="balance-amount">$5000.00</span>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <!-- Game Board -->
+            <div class="game-board">
+                <div class="multiplier-track" id="multiplier-track">
+                    <!-- Dynamic multipliers -->
+                </div>
+
+                <div class="grid-container" id="grid-container">
+                    <!-- 5x5 Grid will be generated here -->
+                </div>
+
+                <div class="game-status" id="game-status">CHOOSE MINES & START</div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-container">
+                <div class="bet-panel">
+                    <div class="config-group">
+                        <label class="config-label">MINES</label>
+                        <select id="mine-count">
+                            <option value="1">1 MINE</option>
+                            <option value="3" selected>3 MINES</option>
+                            <option value="5">5 MINES</option>
+                            <option value="10">10 MINES</option>
+                            <option value="20">20 MINES</option>
+                        </select>
+                    </div>
+
+                    <div class="bet-input-group">
+                        <div class="input-wrapper">
+                            <button class="adjust-btn" id="minus-bet">-</button>
+                            <input type="number" id="bet-amount" value="10.00" step="1" min="1">
+                            <button class="adjust-btn" id="plus-bet">+</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="action-btn bet-mode" id="play-btn">START GAME</button>
+                        <button class="action-btn cashout-mode disabled" id="cashout-btn" disabled>
+                            <span class="small-txt">CASHOUT</span>
+                            <span class="cashout-amount" id="cashout-val">0.00</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div id="notification-area"></div>
+    </div>
+    <script src="../balancer.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

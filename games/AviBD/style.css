@@ -1,0 +1,710 @@
+:root {
+    --bg-dark: #0f111a;
+    --card-bg: #1c1f2d;
+    --accent-red: #ff2d55;
+    --accent-gold: #ffcc00;
+    --text-main: #ffffff;
+    --text-muted: #8a8e9e;
+    --green-cash: #2ecc71;
+    --font-primary: 'Inter', sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-primary);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 90vh;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Header */
+.game-header {
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--accent-red);
+}
+
+.balance-container {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 8px 20px;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.balance-label {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+.balance-value {
+    color: var(--green-cash);
+    font-weight: 800;
+    font-family: var(--font-display);
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: var(--transition);
+}
+
+.icon-btn:hover {
+    color: white;
+}
+
+/* Main Area */
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.history-bar {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 8px;
+    overflow-x: auto;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.hist-item {
+    font-size: 0.75rem;
+    padding: 2px 10px;
+    border-radius: 10px;
+    background: #2a2e3e;
+    color: var(--text-main);
+    font-weight: 600;
+}
+
+.hist-item.low {
+    color: #8a8e9e;
+}
+
+.hist-item.mid {
+    color: #9b59b6;
+}
+
+.hist-item.high {
+    color: var(--accent-gold);
+}
+
+/* Flight Zone */
+.flight-zone {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Cinematic Sunburst Background */
+.flight-zone::before {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    left: -10%;
+    width: 150%;
+    height: 150%;
+    background: repeating-conic-gradient(from 0deg at 0% 100%,
+            rgba(255, 255, 255, 0.03) 0deg 5deg,
+            transparent 5deg 10deg);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Central Blue Glow */
+.flight-zone::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(0, 150, 255, 0.2) 0%, transparent 70%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+#graph-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+}
+
+.graph-labels {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    z-index: 3;
+    pointer-events: none;
+    font-weight: 700;
+}
+
+.grid-overlay {
+    display: none;
+    /* Removed for cleaner cinematic look */
+}
+
+.flight-zone::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 3;
+}
+
+@keyframes backgroundScroll {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-50px, 50px);
+    }
+}
+
+.clouds-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.cloud {
+    position: absolute;
+    background: white;
+    opacity: 0.1;
+    filter: blur(20px);
+    border-radius: 50%;
+}
+
+@keyframes floatCloud {
+    from {
+        transform: translateX(110%);
+    }
+
+    to {
+        transform: translateX(-110%);
+    }
+}
+
+.multiplier-display {
+    font-family: var(--font-display);
+    font-size: var(--multiplier-fs, 4rem);
+    font-weight: 950;
+    z-index: 100;
+    color: white;
+    text-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s ease-out;
+    letter-spacing: -3px;
+    pointer-events: none;
+    margin-top: -140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.plane-container {
+    position: absolute;
+    width: 120px;
+    /* Slightly smaller plane to match reference scale */
+    height: 80px;
+    z-index: 5000;
+    /* Below multiplier */
+    pointer-events: none;
+    transition: transform 0.1s linear;
+    rotate: -25deg;
+}
+
+.plane-img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 12px rgba(255, 220, 100, 0.8));
+    transform: scaleX(-1) translateX(-20%);
+}
+
+.plane-shaker {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.plane-trail {
+    position: absolute;
+    bottom: 10px;
+    right: 80%;
+    width: 0px;
+    height: 3px;
+    background: linear-gradient(to left, var(--accent-red), transparent);
+    transform-origin: right center;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.crash-text {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--accent-red);
+    font-family: var(--font-display);
+    font-size: var(--crash-fs, 4rem);
+    font-weight: 900;
+    display: none;
+    z-index: 50;
+    text-shadow: 0 0 20px rgba(252, 214, 0, 0.5);
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Controls */
+.controls-container {
+    padding: 25px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bet-panel {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.bet-controls-wrapper {
+    display: flex;
+    gap: 15px;
+    align-items: stretch;
+}
+
+.bet-input-group {
+    background: #2a2e3e;
+    padding: 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Auto Cashout Styling */
+.auto-cashout-group {
+    background: #2a2e3e;
+    padding: 10px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 140px;
+}
+
+.auto-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.auto-label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: var(--text-muted);
+}
+
+.auto-input-wrapper {
+    background: #1c1f2d;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+#auto-cashout-value {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    text-align: right;
+    font-weight: 700;
+    font-size: 1rem;
+    outline: none;
+}
+
+.auto-unit {
+    color: var(--accent-gold);
+    font-weight: 900;
+    margin-left: 5px;
+}
+
+/* Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #363b4e;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: var(--green-cash);
+}
+
+input:checked+.slider:before {
+    transform: translateX(14px);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background: #1c1f2d;
+    border-radius: 10px;
+    padding: 2px;
+}
+
+.adjust-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#bet-amount {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+#bet-amount::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+.quick-bets {
+    display: flex;
+    gap: 5px;
+}
+
+.quick-btn {
+    flex: 1;
+    background: #363b4e;
+    border: none;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.quick-btn:hover {
+    background: #4a516a;
+}
+
+.action-btn {
+    height: 80px;
+    width: 200px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.action-btn.bet-mode {
+    background: var(--green-cash);
+    color: black;
+}
+
+.action-btn.bet-mode:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+}
+
+.action-btn.cashout-mode {
+    background: var(--accent-gold);
+    color: black;
+}
+
+.action-btn.cashout-mode:hover {
+    background: #ffdb4d;
+}
+
+.btn-primary-text {
+    font-weight: 900;
+    font-size: 1.4rem;
+}
+
+.btn-secondary-text {
+    font-size: 0.8rem;
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-red);
+    border-radius: 10px;
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-2px, 2px);
+    }
+
+    50% {
+        transform: translate(2px, -2px);
+    }
+
+    75% {
+        transform: translate(-2px, -2px);
+    }
+}
+
+.shaking {
+    animation: shake 0.2s infinite;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 600px) {
+    body {
+        overflow: hidden;
+        height: 100dvh;
+    }
+
+    .app-container {
+        height: 100dvh;
+        border-radius: 0;
+        max-width: 100%;
+    }
+
+    .game-header {
+        padding: 10px 12px;
+    }
+
+    .logo-text {
+        font-size: 1rem;
+    }
+
+    .balance-container {
+        padding: 5px 12px;
+    }
+
+    .balance-value {
+        font-size: 0.85rem;
+    }
+
+    .icon-btn {
+        font-size: 1rem;
+        margin-left: 5px;
+    }
+
+    .history-bar {
+        height: 34px;
+        padding: 0 10px;
+        gap: 5px;
+    }
+
+    .hist-item {
+        font-size: 0.65rem;
+        padding: 2px 8px;
+    }
+
+    /* Multiplier display smaller on mobile */
+    .multiplier-display {
+        font-size: var(--multiplier-fs, 3.5rem) !important;
+        margin-top: -80px;
+    }
+
+    .crash-text {
+        font-size: 1.8rem;
+        top: 15%;
+        width: auto;
+    }
+
+    /* Styles for the "WAITING" and "NEXT ROUND" text inside multiplier display */
+    .multiplier-display .waiting-title {
+        font-size: 1.5rem !important;
+    }
+
+    .multiplier-display .waiting-timer {
+        font-size: 3.5rem !important;
+    }
+
+    /* Smaller plane */
+    .plane-container {
+        width: 80px;
+        height: 55px;
+    }
+
+    /* Controls stacked on mobile */
+    .controls-container {
+        padding: 12px;
+    }
+
+    .bet-panel {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .bet-controls-wrapper {
+        flex-direction: row;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .bet-input-group {
+        flex: 1;
+        padding: 8px;
+    }
+
+    #bet-amount {
+        width: 70px;
+        font-size: 1rem;
+    }
+
+    .auto-cashout-group {
+        width: 120px;
+        padding: 8px;
+    }
+
+    .action-btn {
+        width: 100%;
+        height: 60px;
+    }
+
+    .btn-primary-text {
+        font-size: 1.2rem;
+    }
+
+    .quick-btn {
+        padding: 4px;
+        font-size: 0.75rem;
+    }
+}

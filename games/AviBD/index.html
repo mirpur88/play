@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVIABD</title>
+    <meta name="description"
+        content="Experience the thrill of the Aviator game demo. Fly high and cash out before the crash!">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Outfit:wght@500;700;900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="logo">
+                <div onclick="GameBridge.goHome()"
+                    style="cursor: pointer; background: rgba(255,255,255,0.1); padding: 6px 10px; border-radius: 8px; margin-right: 12px; display: inline-flex; align-items: center; gap: 6px; font-size:0.8rem;">
+                    <i class="fas fa-home"></i> <span>HOME</span>
+                </div>
+                <span class="logo-text">AVIABD</span>
+            </div>
+            <div class="balance-container">
+                <span class="balance-label">BALANCE</span>
+                <span id="balance-amount" class="balance-value">৳0.00</span>
+            </div>
+            <button class="icon-btn">❔</button>
+            <button class="icon-btn">⚙️</button>
+        </header>
+
+        <!-- Main Game Area -->
+        <main class="game-main">
+            <!-- History -->
+            <div class="history-bar" id="history-container">
+                <!-- Multipliers will be injected here -->
+            </div>
+
+            <!-- Flight Zone -->
+            <div class="flight-zone" id="flight-zone">
+                <canvas id="graph-canvas"></canvas>
+                <div class="graph-labels">TIME (s) | MULTIPLIER</div>
+                <div class="grid-overlay"></div>
+                <div class="clouds-container" id="clouds-container"></div>
+                <div class="multiplier-display" id="multiplier-display">1.00x</div>
+                <div class="plane-container" id="plane-container">
+                    <div class="plane-shaker" id="plane-shaker">
+                        <img src="https://cdn-icons-png.flaticon.com/512/17266/17266374.png" alt="Plane"
+                            class="plane-img" id="plane-img">
+                    </div>
+                    <div class="plane-trail" id="plane-trail"></div>
+                </div>
+                <div class="crash-text" id="crash-text">FLEW AWAY!</div>
+            </div>
+
+            <!-- Controls -->
+            <div class="controls-container">
+                <div class="bet-panel">
+                    <div class="bet-controls-wrapper">
+                        <div class="bet-input-group">
+                            <div class="input-wrapper">
+                                <button class="adjust-btn" id="minus-bet">-</button>
+                                <input type="number" id="bet-amount" value="10.00" step="1" min="1">
+                                <button class="adjust-btn" id="plus-bet">+</button>
+                            </div>
+                            <div class="quick-bets">
+                                <button class="quick-btn" data-val="10">10</button>
+                                <button class="quick-btn" data-val="100">100</button>
+                                <button class="quick-btn" data-val="500">500</button>
+                                <button class="quick-btn" data-val="1000">1000</button>
+                            </div>
+                        </div>
+
+                        <!-- Auto Cashout Section -->
+                        <div class="auto-cashout-group">
+                            <div class="auto-header">
+                                <span class="auto-label">AUTO CASHOUT</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="auto-cashout-toggle">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                            <div class="auto-input-wrapper">
+                                <input type="number" id="auto-cashout-value" value="2.00" step="0.01" min="1.01">
+                                <span class="auto-unit">x</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="action-btn bet-mode" id="main-action-btn">
+                        <span class="btn-primary-text">BET</span>
+                        <span class="btn-secondary-text" id="btn-bet-info">10.00 USD</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Notification system -->
+    <div id="notification-area"></div>
+
+    <script src="../balancer.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
