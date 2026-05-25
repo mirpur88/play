@@ -1,0 +1,17 @@
+{
+  "name": "Khelun ar jitun",
+  "short_name": "Khelun",
+  "description": "Premium gaming and casino platform.",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#1a2a6c",
+  "theme_color": "#ffcc00",
+  "icons": [
+    {
+      "src": "pwa_icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

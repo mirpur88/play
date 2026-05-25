@@ -1,0 +1,480 @@
+:root {
+    --bg-dark: #0a0b10;
+    --card-bg: #141621;
+    --accent-red: #ff2d55;
+    --accent-gold: #ffcc00;
+    --accent-blue: #00d2ff;
+    --text-main: #ffffff;
+    --text-muted: #8a8e9e;
+    --green-cash: #2ecc71;
+    --font-primary: 'Inter', sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-primary);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 900px;
+    height: 85vh;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-image:
+        radial-gradient(circle at 50% -20%, rgba(0, 210, 255, 0.1), transparent 50%),
+        radial-gradient(circle at center, rgba(255, 45, 85, 0.05), transparent 80%);
+}
+
+.game-header {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.logo-text .accent {
+    color: var(--accent-blue);
+}
+
+.balance-container {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 25px;
+    border-radius: 50px;
+    text-align: center;
+    border: 1px solid rgba(0, 210, 255, 0.2);
+}
+
+.balance-label {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    font-weight: 800;
+    margin-bottom: 2px;
+}
+
+.balance-value {
+    color: var(--accent-blue);
+    font-weight: 900;
+    font-size: 1.2rem;
+    font-family: var(--font-display);
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: var(--transition);
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Switch to flex-start for more control */
+    align-items: center;
+    padding: 20px 40px;
+    gap: 30px;
+    /* Consistent gap between main sections */
+}
+
+/* Coin 3D Logic */
+.coin-zone {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    perspective: 1000px;
+}
+
+.coin {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 3s cubic-bezier(0.15, 0, 0.15, 1);
+}
+
+.heads,
+.tails {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    /* Ensure image doesn't bleed out */
+    box-shadow:
+        inset 0 0 20px rgba(0, 0, 0, 0.5),
+        0 0 30px rgba(0, 210, 255, 0.2);
+}
+
+.heads {
+    background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+    border: 8px solid #ccac00;
+}
+
+.tails {
+    background: radial-gradient(circle at 30% 30%, #e0e0e0, #808080);
+    border: 8px solid #a0a0a0;
+    transform: rotateY(180deg);
+}
+
+.coin img {
+    width: 100%;
+    /* Fill the entire circle for requested images */
+    height: 100%;
+    object-fit: cover;
+    /* Maintain aspect ratio */
+}
+
+.shadow {
+    width: 140px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    filter: blur(10px);
+    border-radius: 50%;
+    margin-top: 40px;
+}
+
+.result-text {
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 900;
+    text-align: center;
+    color: var(--text-muted);
+    min-height: 2.5rem;
+    /* Reserve space to prevent layout jump */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Controls */
+.controls-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Tighter gap */
+    align-items: center;
+    margin-top: auto;
+    /* Push to bottom */
+    padding-bottom: 20px;
+}
+
+.selection-panel {
+    display: flex;
+    gap: 20px;
+}
+
+.side-btn {
+    width: 160px;
+    padding: 15px;
+    border-radius: 16px;
+    border: 2px solid #2a2e3e;
+    background: #1c1f2d;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.side-btn.active {
+    border-color: var(--accent-blue);
+    background: rgba(0, 210, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 210, 255, 0.15);
+}
+
+.side-label {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: white;
+}
+
+.payout-label {
+    font-size: 0.8rem;
+    color: var(--accent-gold);
+    font-weight: 700;
+}
+
+.bet-panel {
+    display: flex;
+    gap: 20px;
+}
+
+.bet-input-group {
+    background: #1c1f2d;
+    padding: 10px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.adjust-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #2a2e3e;
+    background: transparent;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#bet-amount {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.quick-bets {
+    display: flex;
+    gap: 5px;
+}
+
+.quick-btn {
+    flex: 1;
+    background: #2a2e3e;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.flip-btn {
+    width: 220px;
+    height: 85px;
+    border-radius: 16px;
+    border: none;
+    background: var(--accent-blue);
+    color: black;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+    box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+}
+
+.flip-btn:hover {
+    transform: translateY(-2px);
+    background: #33e1ff;
+}
+
+.flip-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary-text {
+    font-family: var(--font-display);
+    font-weight: 1000;
+    font-size: 1.5rem;
+}
+
+.btn-secondary-text {
+    font-weight: 700;
+    opacity: 0.8;
+}
+
+/* Animations */
+@keyframes spin-heads {
+    from {
+        transform: rotateY(0);
+    }
+
+    to {
+        transform: rotateY(1800deg);
+    }
+}
+
+@keyframes spin-tails {
+    from {
+        transform: rotateY(0);
+    }
+
+    to {
+        transform: rotateY(1980deg);
+    }
+}
+
+.spinning-heads {
+    animation: spin-heads 3s forwards;
+}
+
+.spinning-tails {
+    animation: spin-tails 3s forwards;
+}
+
+.win-anim {
+    animation: winFlash 0.5s 3;
+}
+
+@keyframes winFlash {
+    50% {
+        color: var(--green-cash);
+        transform: scale(1.1);
+    }
+}
+
+#notification-area {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 600px) {
+    body {
+        overflow: auto;
+        height: auto;
+        align-items: flex-start;
+    }
+
+    .app-container {
+        height: 100dvh;
+        border-radius: 0;
+        max-width: 100%;
+    }
+
+    .game-header {
+        padding: 12px 15px;
+    }
+
+    .logo-text {
+        font-size: 1.1rem;
+    }
+
+    .balance-container {
+        padding: 6px 15px;
+    }
+
+    .balance-value {
+        font-size: 0.95rem;
+    }
+
+    .game-main {
+        padding: 15px 15px;
+        gap: 15px;
+        overflow-y: auto;
+    }
+
+    /* Smaller coin on mobile */
+    .coin-zone {
+        width: 140px;
+        height: 140px;
+    }
+
+    .shadow {
+        width: 100px;
+        margin-top: 20px;
+    }
+
+    .result-text {
+        font-size: 1.5rem;
+    }
+
+    /* Stack controls vertically */
+    .controls-container {
+        gap: 12px;
+        padding-bottom: 12px;
+    }
+
+    .selection-panel {
+        gap: 10px;
+    }
+
+    .side-btn {
+        width: 130px;
+        padding: 10px;
+    }
+
+    .side-label {
+        font-size: 1rem;
+    }
+
+    .bet-panel {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .bet-input-group {
+        width: 100%;
+    }
+
+    #bet-amount {
+        width: 100%;
+    }
+
+    .flip-btn {
+        width: 100%;
+        height: 65px;
+    }
+
+    .btn-primary-text {
+        font-size: 1.2rem;
+    }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heads or Tails - Premium Prediction Game</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Outfit:wght@700;900&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="logo">
+                <div class="home-btn" onclick="GameBridge.goHome()"
+                    style="cursor: pointer; background: rgba(255,255,255,0.1); padding: 8px 12px; border-radius: 8px; margin-right: 15px; display: inline-flex; align-items: center; gap: 8px; font-size: 0.8rem; vertical-align: middle;">
+                    <i class="fas fa-home"></i> <span>HOME</span>
+                </div>
+                <span class="logo-text">COIN <span class="accent">FLIP-BD</span></span>
+            </div>
+            <div class="balance-container">
+                <span class="balance-label">YOUR BALANCE</span>
+                <span class="balance-value" id="balance-amount">$5000.00</span>
+            </div>
+        </header>
+
+        <main class="game-main">
+            <!-- Coin Area -->
+            <div class="coin-zone">
+                <div class="coin" id="coin">
+                    <div class="heads">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/US_One_Cent_Obv.png" alt="Heads">
+                    </div>
+                    <div class="tails">
+                        <img src="https://cdn-icons-png.flaticon.com/256/8078/8078848.png" alt="Tails">
+                    </div>
+                </div>
+                <div class="shadow"></div>
+
+                <div class="result-text" id="result-display">PICK YOUR SIDE</div>
+            </div>
+
+            <!-- Interaction Area -->
+            <div class="controls-container">
+                <div class="selection-panel">
+                    <button class="side-btn heads-select active" data-side="heads">
+                        <span class="side-label">HEADS</span>
+                        <span class="payout-label">2.00x</span>
+                    </button>
+                    <button class="side-btn tails-select" data-side="tails">
+                        <span class="side-label">TAILS</span>
+                        <span class="payout-label">2.00x</span>
+                    </button>
+                </div>
+
+                <div class="bet-panel">
+                    <div class="bet-input-group">
+                        <div class="input-wrapper">
+                            <button class="adjust-btn" id="minus-bet">-</button>
+                            <input type="number" id="bet-amount" value="10.00" step="1" min="1">
+                            <button class="adjust-btn" id="plus-bet">+</button>
+                        </div>
+                        <div class="quick-bets">
+                            <button class="quick-btn" data-val="10">10</button>
+                            <button class="quick-btn" data-val="50">50</button>
+                            <button class="quick-btn" data-val="100">100</button>
+                            <button class="quick-btn" data-val="500">500</button>
+                        </div>
+                    </div>
+                    <button class="flip-btn" id="flip-action-btn">
+                        <span class="btn-primary-text">FLIP COIN</span>
+                        <span class="btn-secondary-text" id="btn-bet-info">10.00 USD</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <div id="notification-area"></div>
+    </div>
+    <script src="../balancer.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

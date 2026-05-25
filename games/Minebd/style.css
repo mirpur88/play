@@ -1,0 +1,500 @@
+:root {
+    --bg-dark: #0a0b10;
+    --card-bg: #141621;
+    --accent-yellow: #ffcc00;
+    --accent-red: #ff2d55;
+    --accent-green: #2ecc71;
+    --text-main: #ffffff;
+    --text-muted: #8a8e9e;
+    --font-primary: 'Inter', sans-serif;
+    --font-display: 'Outfit', sans-serif;
+    --grid-bone: #2a2e3e;
+    --grid-win: rgba(255, 204, 0, 0.2);
+    --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-primary);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1000px;
+    height: 90vh;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-image:
+        radial-gradient(circle at 50% 0%, rgba(255, 204, 0, 0.08), transparent 50%);
+}
+
+.game-header {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo-text {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 900;
+}
+
+.logo-text .accent {
+    color: var(--accent-yellow);
+}
+
+.balance-container {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 25px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 204, 0, 0.2);
+    text-align: center;
+}
+
+.balance-label {
+    display: block;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    font-weight: 800;
+}
+
+.balance-value {
+    color: var(--accent-yellow);
+    font-weight: 900;
+    font-size: 1.1rem;
+    font-family: var(--font-display);
+}
+
+.back-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.game-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.game-board {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+/* Multiplier Track */
+.multiplier-track {
+    width: 100%;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 10px;
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.multiplier-track::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Edge */
+}
+
+.step-card {
+    background: #1c1f2d;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 900;
+    color: var(--text-muted);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
+    min-width: 80px;
+    text-align: center;
+}
+
+.step-card.active {
+    background: rgba(255, 204, 0, 0.1);
+    border-color: var(--accent-yellow);
+    color: var(--accent-yellow);
+    transform: scale(1.1);
+}
+
+/* Grid System */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 75px);
+    grid-template-rows: repeat(5, 75px);
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 20px;
+    border: 2px solid #2a2e3e;
+}
+
+.tile {
+    background: #2a2e3e;
+    border-radius: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.tile:hover {
+    background: #363b4e;
+    transform: translateY(-2px);
+}
+
+.tile.revealed-safe {
+    background: rgba(46, 204, 113, 0.1);
+    border: 2px solid var(--accent-green);
+    cursor: default;
+}
+
+.tile.revealed-mine {
+    background: rgba(255, 45, 85, 0.1);
+    border: 2px solid var(--accent-red);
+    cursor: default;
+}
+
+.tile img {
+    width: 65%;
+    height: auto;
+    opacity: 0;
+    transition: all 0.5s ease;
+    transform: scale(0.5);
+}
+
+.tile.revealed img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.tile.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.game-status {
+    margin-top: 25px;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Controls */
+.controls-container {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bet-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.config-group {
+    background: #1c1f2d;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+
+.config-label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+}
+
+#mine-count {
+    background: #2a2e3e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    font-weight: 900;
+    padding: 8px 12px;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    /* Remove default browser arrow */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: calc(100% - 12px) center;
+    padding-right: 35px;
+}
+
+#mine-count option {
+    background: #1c1f2d;
+    color: white;
+}
+
+.bet-input-group {
+    background: #1c1f2d;
+    padding: 10px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.adjust-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #2a2e3e;
+    background: transparent;
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#bet-amount {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 80px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.action-btn {
+    height: 65px;
+    padding: 0 30px;
+    border-radius: 15px;
+    border: none;
+    font-weight: 900;
+    font-family: var(--font-display);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.bet-mode {
+    background: var(--accent-yellow);
+    color: black;
+    font-size: 1.1rem;
+}
+
+.cashout-mode {
+    background: var(--accent-green);
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cashout-mode .small-txt {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.cashout-mode .cashout-amount {
+    font-size: 1.2rem;
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.action-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#notification-area {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 600px) {
+    body {
+        overflow: hidden;
+        /* Prevent body scroll, use container scroll */
+        height: 100dvh;
+        align-items: center;
+    }
+
+    .app-container {
+        height: 100dvh;
+        border-radius: 0;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .game-header {
+        padding: 10px 15px;
+        flex-shrink: 0;
+    }
+
+    .logo-text {
+        font-size: 1.1rem;
+    }
+
+    .balance-container {
+        padding: 4px 12px;
+    }
+
+    .balance-value {
+        font-size: 0.9rem;
+    }
+
+    .game-main {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        /* Let board scroll if needed, but try to fit */
+        flex: 1;
+    }
+
+    .game-board {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 0;
+        /* Important for flex child to shrink */
+    }
+
+    .multiplier-track {
+        margin-bottom: 10px;
+        gap: 5px;
+        padding: 5px;
+        flex-shrink: 0;
+    }
+
+    .step-card {
+        padding: 6px 10px;
+        font-size: 0.7rem;
+        min-width: 55px;
+    }
+
+    /* Fix grid sizing to fit mobile screens */
+    .grid-container {
+        grid-template-columns: repeat(5, 1fr);
+        grid-template-rows: repeat(5, 1fr);
+        width: 100%;
+        max-width: 340px;
+        /* Limit width to keep tiles reachable */
+        aspect-ratio: 1 / 1;
+        gap: 6px;
+        padding: 8px;
+        margin: 0 auto;
+    }
+
+    .tile {
+        aspect-ratio: 1 / 1;
+    }
+
+    .tile img {
+        width: 70%;
+    }
+
+    .game-status {
+        font-size: 0.9rem;
+        margin-top: 10px;
+        letter-spacing: 0.5px;
+        text-align: center;
+    }
+
+    .controls-container {
+        padding: 10px;
+        flex-shrink: 0;
+    }
+
+    .bet-panel {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .config-group {
+        padding: 6px 10px;
+        grid-column: span 1;
+    }
+
+    .bet-input-group {
+        padding: 6px;
+        grid-column: span 1;
+    }
+
+    .input-wrapper {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    #bet-amount {
+        width: 50px;
+        font-size: 1rem;
+    }
+
+    .action-buttons {
+        grid-column: span 2;
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .action-btn {
+        height: 48px;
+        padding: 0 10px;
+        font-size: 0.9rem;
+        flex: 1;
+    }
+
+    .cashout-mode .cashout-amount {
+        font-size: 1rem;
+    }
+}

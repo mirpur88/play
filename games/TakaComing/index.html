@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taka Coming - High Multiplier Slots</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <header class="game-header">
+            <div class="logo-wrap">
+                <a href="javascript:void(0)" onclick="GameBridge.goHome()" class="header-home-btn"><i
+                        class="fas fa-home"></i></a>
+                <div class="logo">Taka<br>COMING</div>
+            </div>
+            <div class="balance-box">
+                <div class="balance-label">Total Balance</div>
+                <div class="balance-value" id="balance-amount">৳0.00</div>
+            </div>
+        </header>
+
+        <main class="reels-container" id="reels-area">
+            <div class="center-line"></div>
+
+            <div class="reel" id="reel-1">
+                <div class="strip"></div>
+                <div class="reel-overlay"></div>
+            </div>
+
+            <div class="reel" id="reel-2">
+                <div class="strip"></div>
+                <div class="reel-overlay"></div>
+            </div>
+
+            <div class="reel" id="reel-3">
+                <div class="strip"></div>
+                <div class="reel-overlay"></div>
+            </div>
+
+            <div class="reel special" id="reel-special">
+                <div class="strip"></div>
+                <div class="reel-overlay"></div>
+            </div>
+        </main>
+
+        <footer class="controls">
+            <div class="bet-settings">
+                <span class="bet-label">BET AMOUNT</span>
+                <div class="bet-input-wrap">
+                    <button class="bet-btn" id="minus-bet">-</button>
+                    <input type="number" id="bet-amount" value="10" step="1" min="1">
+                    <button class="bet-btn" id="plus-bet">+</button>
+                </div>
+                <div class="quick-bets">
+                    <button class="q-btn" data-val="10">10</button>
+                    <button class="q-btn" data-val="100">100</button>
+                    <button class="q-btn" data-val="500">500</button>
+                    <button class="q-btn" data-val="1000">1000</button>
+                    <button class="q-btn" data-val="3000">3000</button>
+                    <button class="q-btn" data-val="5000">5000</button>
+                    <button class="q-btn" data-val="10000">10000</button>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <div class="auto-toggle-wrap">
+                    <label class="switch">
+                        <input type="checkbox" id="auto-spin-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="auto-label">AUTO</span>
+                </div>
+                <button class="spin-btn" id="spin-btn">
+                    <span class="spin-text">SPIN</span>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <div id="notification">WON ৳0.00</div>
+
+    <script src="../balancer.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

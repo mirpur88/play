@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Card Coming - Elite Casino Slots</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <a href="javascript:void(0)" onclick="GameBridge.goHome()" class="header-home-btn"><i
+                        class="fas fa-home"></i></a>
+                <h1 class="logo">CARD COMING</h1>
+            </div>
+            <div class="balance-box">
+                <span class="balance-label">TOTAL BALANCE</span>
+                <div class="balance-value">৳<span id="balance-amount">0.00</span></div>
+            </div>
+        </header>
+
+        <!-- Notification Box -->
+        <div id="notify-box" class="notify-box"></div>
+
+        <!-- Reels Space -->
+        <div class="reels-area" id="reels-area">
+            <div class="reels-container">
+                <div class="center-line"></div>
+
+                <!-- Reel 1 -->
+                <div class="reel" id="reel-1">
+                    <div class="strip"></div>
+                    <div class="reel-overlay"></div>
+                </div>
+                <!-- Reel 2 -->
+                <div class="reel" id="reel-2">
+                    <div class="strip"></div>
+                    <div class="reel-overlay"></div>
+                </div>
+                <!-- Reel 3 -->
+                <div class="reel" id="reel-3">
+                    <div class="strip"></div>
+                    <div class="reel-overlay"></div>
+                </div>
+
+                <!-- Multiplier Reel -->
+                <div class="reel special" id="reel-4">
+                    <div class="strip"></div>
+                    <div class="reel-overlay"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Betting Controls -->
+        <div class="betting-zone">
+            <div class="bet-settings">
+                <span class="bet-label">BET AMOUNT</span>
+                <div class="bet-input-wrap">
+                    <button class="bet-btn" id="minus-bet">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="20">
+                            <path d="M19 13H5v-2h14v2z" />
+                        </svg>
+                    </button>
+                    <input type="number" id="bet-amount" value="10" step="1" min="1">
+                    <button class="bet-btn" id="plus-bet">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="20">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="quick-bets">
+                    <button class="q-btn" data-val="10">10</button>
+                    <button class="q-btn" data-val="100">100</button>
+                    <button class="q-btn" data-val="500">500</button>
+                    <button class="q-btn" data-val="1000">1000</button>
+                    <button class="q-btn" data-val="3000">3000</button>
+                    <button class="q-btn" data-val="5000">5000</button>
+                    <button class="q-btn" data-val="10000">10000</button>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <div class="auto-spin">
+                    <span class="auto-label">AUTO</span>
+                    <label class="switch">
+                        <input type="checkbox" id="auto-spin-switch">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <button class="spin-btn" id="spin-btn">
+                    <span class="spin-text">SPIN</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../balancer.js"></script>
+    <script src="script.js"></script>
+</body>
+
+
+</html>
